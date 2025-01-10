@@ -52,6 +52,9 @@ class TempRemover:
             return False
 
     def archivo_en_uso(self, file_path: Union[str, Path]) -> bool:
+        """
+        Comprueba si el archivo está en uso, modo exclusivo
+        """
         if not os.path.exists(file_path):
             return False
 
@@ -68,6 +71,9 @@ class TempRemover:
             return True
 
     def _safe_remove(self, path: Union[str, Path], folder_type: str = 'temp') -> bool:
+        """
+        Comprueba si el archivo se puede borrar, es decir si es seguro borrarlo, si está protegido o no
+        """
         path = Path(path)
 
         if path.name.lower() in self.protected_files.get(folder_type, []):
@@ -97,6 +103,9 @@ class TempRemover:
             return False
 
     def limpiar_temp(self) -> None:
+        """
+        Borrar el contenido de la carpeta Temp
+        """
         temp_paths = [
             os.getenv('TEMP'),
             os.getenv('TMP'),
@@ -131,6 +140,9 @@ class TempRemover:
             self._safe_remove(item, 'prefetch')
 
     def limpiar_carpetas_vacias(self, folder_path: Union[str, Path]) -> None:
+        """
+        Limpiar las carpetas vacías, borra las carpetas vacías
+        """
         folder_path = Path(folder_path)
 
         if not folder_path.exists():
